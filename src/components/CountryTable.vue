@@ -33,7 +33,7 @@ import {
   NTooltip,
   NCheckbox,
   NCheckboxGroup,
-  NConfigProvider
+  NConfigProvider,
 } from 'naive-ui'
 import {
   SearchOutline as SearchIcon,
@@ -48,7 +48,7 @@ const pagination = {
   simple: true,
 }
 
-const cities = ref([]);
+const cities = ref([])
 
 const columns = [
   {
@@ -192,14 +192,12 @@ const filteredData = computed(() => {
 })
 
 onMounted(async () => {
-  await countriesStore.fetchCountries();
+  await countriesStore.fetchCountries()
 })
 
-
-watch(cities, (newVal)=>{
+watch(cities, (newVal) => {
   countriesStore.saveToLocalStorage(newVal)
 })
-
 </script>
 
 <style lang="scss"></style>

@@ -9,7 +9,6 @@
 }
 
 @media (min-width: 1024px) {
-
   #app {
     margin: 0 auto;
     padding: 0;
@@ -38,7 +37,6 @@
   }
 
   .n-data-table {
-
     .table_select .n-avatar {
       background: none;
     }
@@ -147,11 +145,10 @@ main {
     .n-menu-item-content.n-menu-item-content--selected,
     .n-menu-item-content.n-menu-item-content--selected::before,
     .n-menu-item-content.n-menu-item-content--selected .n-menu-item-content__icon,
-    .n-menu-item-content:not(.n-menu-item-content--disabled).n-menu-item-content--selected:hover .n-menu-item-content__icon {
-      background: #2C2E30 !important;
+    .n-menu-item-content:not(.n-menu-item-content--disabled).n-menu-item-content--selected:hover
+      .n-menu-item-content__icon {
+      background: #2c2e30 !important;
       color: #fff !important;
     }
-
   }
 }
-

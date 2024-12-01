@@ -18,10 +18,10 @@ export const useCountriesStore = defineStore('countries', {
 
   actions: {
     saveToLocalStorage(data) {
-      localStorage.setItem('countriesLocal', data);
+      localStorage.setItem('countriesLocal', data)
     },
     loadFromLocalStorage() {
-      this.sharedData = localStorage.getItem('countriesLocal') || '';
+      this.sharedData = localStorage.getItem('countriesLocal') || ''
     },
     // Fetch all countriesList
     async fetchCountries() {

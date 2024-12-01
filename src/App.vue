@@ -1,7 +1,7 @@
 <template>
   <div class="app-container flex">
     <nav>
-      <n-menu :options="menuOptions" />
+      <n-menu :options="menuOptions" :default-value="ROUTES.countries.key"/>
     </nav>
     <main class="w-max h-100vh bg-#f2f2f3">
       <RouterView />
@@ -29,7 +29,7 @@ import { NIcon, useMessage } from 'naive-ui'
 import { defineComponent, h } from 'vue'
 import { RouterLink } from 'vue-router'
 
-import { ROUTES } from './common/consts.js'
+import { ROUTES } from '@/utils/consts.js'
 
 const menuOptions = [
   {

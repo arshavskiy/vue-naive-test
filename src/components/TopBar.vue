@@ -45,7 +45,7 @@ import {
 } from '@vicons/ionicons5'
 import { NIcon, NInput, NSpace, NButton, NDivider, NEl } from 'naive-ui'
 
-import { useUsersStore } from '../stores/usersStore.js'
+import { useUsersStore } from '../store/usersStore.js'
 import { storeToRefs } from 'pinia'
 const usersStore = useUsersStore()
 

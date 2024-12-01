@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CountriesView from '../views/CountriesView.vue'
 
-import { ROUTES } from '../common/consts.js'
+import { ROUTES } from '@/utils/consts.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

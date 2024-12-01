@@ -17,7 +17,7 @@
 <script setup>
 import { onMounted, h, ref, computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useCountriesStore } from '../stores/contryStore.js'
+import { useCountriesStore } from '@/store/contryStore.js'
 
 const countriesStore = useCountriesStore()
 

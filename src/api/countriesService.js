@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { APP_CONFIGS } from '../common/consts.js'
+import { APP_CONFIGS } from '@/utils/consts.js'
 
 const countries_flags = APP_CONFIGS.COUNTRIES_FLAGS
 const base_url = APP_CONFIGS.BASE_URL

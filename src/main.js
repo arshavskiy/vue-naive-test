@@ -1,4 +1,4 @@
-import './assets/main.scss'
+import '@/assets/styles/main.scss'
 import 'vfonts/Lato.css'
 import 'uno.css'
 
@@ -7,7 +7,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import { useCountriesStore } from '@/stores/contryStore.js'
+import { useCountriesStore } from '@/store/contryStore.js'
 
 const app = createApp(App)
 

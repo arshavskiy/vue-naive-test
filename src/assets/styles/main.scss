@@ -118,8 +118,8 @@ table.n-data-table-table {
     color: #000;
   }
 
-  .n-input__input .n-input__placeholder {
-    padding-left: 10px;
+  .n-input__input {
+    margin-left: 5px;
   }
 }
 
@@ -145,8 +145,7 @@ main {
     .n-menu-item-content.n-menu-item-content--selected,
     .n-menu-item-content.n-menu-item-content--selected::before,
     .n-menu-item-content.n-menu-item-content--selected .n-menu-item-content__icon,
-    .n-menu-item-content:not(.n-menu-item-content--disabled).n-menu-item-content--selected:hover
-      .n-menu-item-content__icon {
+    .n-menu-item-content:not(.n-menu-item-content--disabled).n-menu-item-content--selected:hover {
       background: #2c2e30 !important;
       color: #fff !important;
     }

@@ -2,7 +2,13 @@ import { defineConfig, presetUno, presetAttributify, presetIcons } from 'unocss'
 
 export default defineConfig({
   presets: [
-    presetUno(), // Basic utilities
+    presetUno({
+      getCSS: () => `
+        :root {
+              --n-item-text-color-active: #2c2e30
+        }
+      `,
+    }), // Basic utilities
     presetAttributify(), // Attribute-mode support (e.g., text="red")
     presetIcons() // Icon support
   ],

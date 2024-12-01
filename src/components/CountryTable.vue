@@ -60,9 +60,9 @@ const columns = [
           style: { marginRight: '8px' },
         }),
         h(NAvatar, {
-          width: 50,
+          width: 20,
           src: row.flags.svg,
-          size: 'small',
+          size: 'medium',
           style: { marginRight: '8px' },
         }),
         row.name.common,
@@ -75,6 +75,7 @@ const columns = [
     title: 'Official name',
     key: 'name.official',
     sortable: true,
+    ellipsis: true,
     sorter: (a, b) => a.name.official.localeCompare(b.name.official), // Sort by user.name
   },
   {
@@ -86,6 +87,7 @@ const columns = [
       try {
         return a.capital[0].localeCompare(b.capital[0])
       } catch (e) {
+        console.error(e);
         return a.capital
       }
     },
@@ -169,7 +171,7 @@ columns.forEach((item) => {
     ['region', 'capital', 'population', 'name'].includes(item.key) ||
     item.title === 'Common name'
   ) {
-    item.width = 150
+    item.width = 180
   } else if (item.key === 'timezones') {
     item.fixed = 'center'
     item.width = 150

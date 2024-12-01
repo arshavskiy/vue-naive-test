@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { countriesService } from '../api/countriesService.js'
+import { ref } from 'vue'
 
 export const useCountriesStore = defineStore('countries', {
   // Initial state
@@ -8,15 +9,26 @@ export const useCountriesStore = defineStore('countries', {
     loading: false,
     error: null,
     countriesLocal: localStorage.getItem('countriesLocal') || '',
+    cities: [],
+    googleUrl: ''
   }),
 
   getters: {
     hasCountries() {
       return this.countries.length > 0
     },
+    getStoreElm(elm){
+      return this[elm];
+    },
+    getGoogleUrl() {
+      return this.googleUrl;
+    }
   },
 
   actions: {
+    setGoogleUrl(url){
+      this.googleUrl = url;
+    },
     saveToLocalStorage(data) {
       localStorage.setItem('countriesLocal', data)
     },

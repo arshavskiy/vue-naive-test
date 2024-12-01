@@ -1,6 +1,9 @@
 <template>
   <n-space vertical className="countries-container">
     <n-card size="medium" :bordered="false">
+
+      <iframeModal v-if="showIframe" :src="googleUrl" />
+
       <n-card title="Countries" size="medium"></n-card>
       <n-checkbox-group v-model:value="cities">
         <n-config-provider>
@@ -14,6 +17,7 @@
       </n-checkbox-group>
     </n-card>
   </n-space>
+
 </template>
 
 <script setup>
@@ -22,9 +26,11 @@ import { storeToRefs } from 'pinia'
 import { useCountriesStore } from '@/store/contryStore.js'
 import { APP_CONFIGS } from '@/utils/consts.js'
 
+import iframeModal from './IframeModal.vue'
+
 const countriesStore = useCountriesStore()
 
-const { countries, loading, error } = storeToRefs(countriesStore)
+const { countries, loading, error, googleUrl } = storeToRefs(countriesStore)
 import {
   NDataTable,
   NTag,
@@ -40,14 +46,13 @@ import {
   EllipsisHorizontalOutline as EllipsisIcon,
 } from '@vicons/ionicons5'
 
-import starSvg from '@/assets/images/star-outline.svg'
-
 const pagination = {
   pageSize: APP_CONFIGS.COUNTRIES_VIEW.pageSize,
   simple: APP_CONFIGS.COUNTRIES_VIEW.simple,
 }
 
 const cities = ref([])
+const showIframe = ref(false)
 
 const columns = [
   {
@@ -151,6 +156,8 @@ const columns = [
                 size: 'small',
                 style: { cursor: 'pointer', position: 'absolute', right: '20px' },
                 onClick: () => {
+                  // countriesStore.setGoogleUrl(row.maps.googleMaps)
+                  // showIframe.value = true;
                   window.open(row.maps.googleMaps, '_blank')
                 },
               }),

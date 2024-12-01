@@ -25,8 +25,8 @@ function renderIcon(icon) {
   return () => h(NIcon, null, { default: () => h(icon) })
 }
 
-import { NIcon, useMessage } from 'naive-ui'
-import { defineComponent, h } from 'vue'
+import { NIcon } from 'naive-ui'
+import { h } from 'vue'
 import { RouterLink } from 'vue-router'
 
 import { ROUTES } from '@/utils/consts.js'

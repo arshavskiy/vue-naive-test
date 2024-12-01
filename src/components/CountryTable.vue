@@ -3,12 +3,14 @@
     <n-card size="medium" :bordered="false">
       <n-card title="Countries" size="medium"></n-card>
       <n-checkbox-group v-model:value="cities">
+        <n-config-provider>
         <n-data-table
           :columns="columns"
           :data="filteredData"
           :pagination="pagination"
           :size="'large'"
         />
+        </n-config-provider>
       </n-checkbox-group>
     </n-card>
   </n-space>
@@ -18,6 +20,7 @@
 import { onMounted, h, ref, computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCountriesStore } from '@/store/contryStore.js'
+import { APP_CONFIGS } from '@/utils/consts.js'
 
 const countriesStore = useCountriesStore()
 
@@ -28,24 +31,20 @@ import {
   NCard,
   NSpace,
   NAvatar,
-  NInput,
-  NIcon,
   NTooltip,
   NCheckbox,
   NCheckboxGroup,
   NConfigProvider,
 } from 'naive-ui'
 import {
-  SearchOutline as SearchIcon,
   EllipsisHorizontalOutline as EllipsisIcon,
-  StarOutline as StarIcon,
 } from '@vicons/ionicons5'
 
 import starSvg from '@/assets/images/star-outline.svg'
 
 const pagination = {
-  pageSize: 20,
-  simple: true,
+  pageSize: APP_CONFIGS.COUNTRIES_VIEW.pageSize,
+  simple: APP_CONFIGS.COUNTRIES_VIEW.simple,
 }
 
 const cities = ref([])

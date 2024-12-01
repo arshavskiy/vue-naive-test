@@ -1,6 +1,10 @@
 export const APP_CONFIGS = {
   COUNTRIES_FLAGS: 'name,flags,capital,region,population,maps,languages,timezones,flags',
   BASE_URL: `https://restcountries.com/v3.1/all`,
+  COUNTRIES_VIEW: {
+      pageSize: 15,
+      simple: true,
+  }
 }
 
 export const ROUTES = {

@@ -122,12 +122,16 @@
 
   .n-menu {
     .n-menu-item {
-      .n-menu-item-content.n-menu-item-content--selected,
       .n-menu-item-content.n-menu-item-content--selected::before,
-      .n-menu-item-content.n-menu-item-content--selected .n-menu-item-content__icon,
-      .n-menu-item-content:not(.n-menu-item-content--disabled).n-menu-item-content--selected:hover {
+      .n-menu-item-content.n-menu-item-content--selected .n-menu-item-content__icon {
         background: #2c2e30 !important;
         color: #fff !important;
+
+      }
+
+      .n-menu-item-content:not(.n-menu-item-content--disabled):hover::before {
+        color: #fff !important;
+        background: #2c2e30 !important;
       }
     }
   }

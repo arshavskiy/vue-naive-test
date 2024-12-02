@@ -168,11 +168,11 @@ columns.forEach((item) => {
   item.minWidth = 100
   item.fixed = 'left'
   if (
-    ['region', 'capital', 'population', 'name'].includes(item.key) ||
+    ['region', 'capital', 'name'].includes(item.key) ||
     item.title === 'Common name'
   ) {
     item.width = 180
-  } else if (item.key === 'timezones') {
+  } else if (['population','timezones'].includes(item.key)) {
     item.fixed = 'center'
     item.width = 150
   }

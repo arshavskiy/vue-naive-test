@@ -1,6 +1,6 @@
 <template>
   <div class="app-container flex">
-    <nav>
+    <nav class="p-4">
       <n-menu :options="menuOptions" :default-value="ROUTES.countries.key" />
     </nav>
     <main class="w-max h-100vh bg-#f2f2f3">

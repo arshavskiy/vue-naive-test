@@ -9,17 +9,14 @@
     size="large"
   >
     <n-spin :show="isLoading">
-      <iframe
-        :src="props.src"
-        style="width: 100%; height: 100%"
-        @load="isLoading = false"
-      ></iframe>
+      <iframe :src="props.src" style="width: 100%; height: 100%" @load="isLoading = false"></iframe>
     </n-spin>
   </n-modal>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
+import { NModal } from 'naive-ui'
 
 const props = defineProps({
   src: {

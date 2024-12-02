@@ -1,23 +1,21 @@
 <template>
   <n-space vertical className="countries-container">
     <n-card size="medium" :bordered="false">
-
-      <iframeModal v-if="showIframe" :src="googleUrl" />
-
       <n-card title="Countries" size="medium"></n-card>
       <n-checkbox-group v-model:value="cities">
         <n-config-provider>
-        <n-data-table
-          :columns="columns"
-          :data="filteredData"
-          :pagination="pagination"
-          :size="'large'"
-        />
+          <n-data-table
+            :columns="columns"
+            :data="filteredData"
+            :pagination="pagination"
+            :size="'large'"
+          />
         </n-config-provider>
       </n-checkbox-group>
     </n-card>
-  </n-space>
 
+    <div id="map_container" class="h-100px h-300px ml-6 mr-6"></div>
+  </n-space>
 </template>
 
 <script setup>
@@ -26,11 +24,12 @@ import { storeToRefs } from 'pinia'
 import { useCountriesStore } from '@/store/contryStore.js'
 import { APP_CONFIGS } from '@/utils/consts.js'
 
-import iframeModal from './IframeModal.vue'
+import 'mapbox-gl/dist/mapbox-gl.css'
+import mapboxgl from 'mapbox-gl';
 
 const countriesStore = useCountriesStore()
 
-const { countries, loading, error, googleUrl } = storeToRefs(countriesStore)
+const { countries, loading, error, counryData } = storeToRefs(countriesStore)
 import {
   NDataTable,
   NTag,
@@ -42,9 +41,7 @@ import {
   NCheckboxGroup,
   NConfigProvider,
 } from 'naive-ui'
-import {
-  EllipsisHorizontalOutline as EllipsisIcon,
-} from '@vicons/ionicons5'
+import { EllipsisHorizontalOutline as EllipsisIcon } from '@vicons/ionicons5'
 
 const pagination = {
   pageSize: APP_CONFIGS.COUNTRIES_VIEW.pageSize,
@@ -53,6 +50,29 @@ const pagination = {
 
 const cities = ref([])
 const showIframe = ref(false)
+const showModal = ref(false)
+
+let map
+
+mapboxgl.accessToken =
+  'pk.eyJ1IjoiYXJzaGF2c2t5IiwiYSI6ImNtNDRwcTBnMDBtcmQybHF4bmQ4ZmU5aGkifQ.IRUrgbtq7fiPTwO40MqgTQ';
+
+const openMap = (row)=>{
+  countriesStore.setGoogleUrl(row)
+  showIframe.value = true
+  showModal.value = true
+
+  if (row.capitalInfo.latlng[0]) {
+    map = new mapboxgl.Map({
+      container: 'map_container', // container ID
+      style: 'mapbox://styles/mapbox/streets-v12', // style URL
+      center: [row.capitalInfo.latlng[1], row.capitalInfo.latlng[0]], // starting position [lng, lat]
+      zoom: 7, // starting zoom
+    })
+  }
+
+
+}
 
 const columns = [
   {
@@ -92,7 +112,7 @@ const columns = [
       try {
         return a.capital[0].localeCompare(b.capital[0])
       } catch (e) {
-        console.error(e);
+        console.error(e)
         return a.capital
       }
     },
@@ -155,11 +175,10 @@ const columns = [
                 width: 20,
                 size: 'small',
                 style: { cursor: 'pointer', position: 'absolute', right: '20px' },
-                onClick: () => {
-                  // countriesStore.setGoogleUrl(row.maps.googleMaps)
-                  // showIframe.value = true;
-                  window.open(row.maps.googleMaps, '_blank')
-                },
+                onClick: ()=> {
+
+                  return openMap(row)
+                }
               }),
             default: () => 'View On Map',
           },
@@ -174,12 +193,9 @@ columns.forEach((item) => {
   item.width = 200
   item.minWidth = 100
   item.fixed = 'left'
-  if (
-    ['region', 'capital', 'name'].includes(item.key) ||
-    item.title === 'Common name'
-  ) {
+  if (['region', 'capital', 'name'].includes(item.key) || item.title === 'Common name') {
     item.width = 180
-  } else if (['population','timezones'].includes(item.key)) {
+  } else if (['population', 'timezones'].includes(item.key)) {
     item.fixed = 'center'
     item.width = 150
   }

@@ -10,7 +10,7 @@ export const useCountriesStore = defineStore('countries', {
     error: null,
     countriesLocal: localStorage.getItem('countriesLocal') || '',
     cities: [],
-    googleUrl: ''
+    counryData: {}
   }),
 
   getters: {
@@ -21,13 +21,13 @@ export const useCountriesStore = defineStore('countries', {
       return this[elm];
     },
     getGoogleUrl() {
-      return this.googleUrl;
+      return this.counryData;
     }
   },
 
   actions: {
-    setGoogleUrl(url){
-      this.googleUrl = url;
+    setGoogleUrl(data){
+      this.counryData = data;
     },
     saveToLocalStorage(data) {
       localStorage.setItem('countriesLocal', data)

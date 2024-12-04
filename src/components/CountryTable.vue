@@ -24,8 +24,7 @@ import { storeToRefs } from 'pinia'
 import { useCountriesStore } from '@/store/contryStore.js'
 import { APP_CONFIGS } from '@/utils/consts.js'
 
-import 'mapbox-gl/dist/mapbox-gl.css'
-import mapboxgl from 'mapbox-gl';
+import { mapbox } from '../utils/mapbox.js'
 
 const countriesStore = useCountriesStore()
 
@@ -52,26 +51,14 @@ const cities = ref([])
 const showIframe = ref(false)
 const showModal = ref(false)
 
-let map
-
-mapboxgl.accessToken =
-  'pk.eyJ1IjoiYXJzaGF2c2t5IiwiYSI6ImNtNDRwcTBnMDBtcmQybHF4bmQ4ZmU5aGkifQ.IRUrgbtq7fiPTwO40MqgTQ';
-
-const openMap = (row)=>{
+const openMap = (row) => {
   countriesStore.setGoogleUrl(row)
   showIframe.value = true
   showModal.value = true
 
   if (row.capitalInfo.latlng[0]) {
-    map = new mapboxgl.Map({
-      container: 'map_container', // container ID
-      style: 'mapbox://styles/mapbox/streets-v12', // style URL
-      center: [row.capitalInfo.latlng[1], row.capitalInfo.latlng[0]], // starting position [lng, lat]
-      zoom: 7, // starting zoom
-    })
+    mapbox.init({ center: row.capitalInfo.latlng })
   }
-
-
 }
 
 const columns = [
@@ -175,10 +162,9 @@ const columns = [
                 width: 20,
                 size: 'small',
                 style: { cursor: 'pointer', position: 'absolute', right: '20px' },
-                onClick: ()=> {
-
+                onClick: () => {
                   return openMap(row)
-                }
+                },
               }),
             default: () => 'View On Map',
           },

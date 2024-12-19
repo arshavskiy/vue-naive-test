@@ -4,15 +4,17 @@
       <n-card title="Countries" size="medium"></n-card>
       <n-checkbox-group v-model:value="cities">
         <n-config-provider>
-        <n-data-table
-          :columns="columns"
-          :data="filteredData"
-          :pagination="pagination"
-          :size="'large'"
-        />
+          <n-data-table
+            :columns="columns"
+            :data="filteredData"
+            :pagination="pagination"
+            :size="'large'"
+          />
         </n-config-provider>
       </n-checkbox-group>
     </n-card>
+
+    <div id="map_container" class="h-100px h-300px ml-6 mr-6"></div>
   </n-space>
 </template>
 
@@ -22,9 +24,11 @@ import { storeToRefs } from 'pinia'
 import { useCountriesStore } from '@/store/contryStore.js'
 import { APP_CONFIGS } from '@/utils/consts.js'
 
+import { mapbox } from '../utils/mapbox.js'
+
 const countriesStore = useCountriesStore()
 
-const { countries, loading, error } = storeToRefs(countriesStore)
+const { countries} = storeToRefs(countriesStore)
 import {
   NDataTable,
   NTag,
@@ -36,11 +40,7 @@ import {
   NCheckboxGroup,
   NConfigProvider,
 } from 'naive-ui'
-import {
-  EllipsisHorizontalOutline as EllipsisIcon,
-} from '@vicons/ionicons5'
-
-import starSvg from '@/assets/images/star-outline.svg'
+import { EllipsisHorizontalOutline as EllipsisIcon } from '@vicons/ionicons5'
 
 const pagination = {
   pageSize: APP_CONFIGS.COUNTRIES_VIEW.pageSize,
@@ -48,6 +48,18 @@ const pagination = {
 }
 
 const cities = ref([])
+const showIframe = ref(false)
+const showModal = ref(false)
+
+const openMap = (row) => {
+  countriesStore.setGoogleUrl(row)
+  showIframe.value = true
+  showModal.value = true
+
+  if (row.capitalInfo.latlng[0]) {
+    mapbox.init({ center: row.capitalInfo.latlng })
+  }
+}
 
 const columns = [
   {
@@ -87,7 +99,7 @@ const columns = [
       try {
         return a.capital[0].localeCompare(b.capital[0])
       } catch (e) {
-        console.error(e);
+        console.error(e)
         return a.capital
       }
     },
@@ -151,7 +163,7 @@ const columns = [
                 size: 'small',
                 style: { cursor: 'pointer', position: 'absolute', right: '20px' },
                 onClick: () => {
-                  window.open(row.maps.googleMaps, '_blank')
+                  return openMap(row)
                 },
               }),
             default: () => 'View On Map',
@@ -167,12 +179,9 @@ columns.forEach((item) => {
   item.width = 200
   item.minWidth = 100
   item.fixed = 'left'
-  if (
-    ['region', 'capital', 'population', 'name'].includes(item.key) ||
-    item.title === 'Common name'
-  ) {
+  if (['region', 'capital', 'name'].includes(item.key) || item.title === 'Common name') {
     item.width = 180
-  } else if (item.key === 'timezones') {
+  } else if (['population', 'timezones'].includes(item.key)) {
     item.fixed = 'center'
     item.width = 150
   }

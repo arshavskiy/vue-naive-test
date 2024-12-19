@@ -2,10 +2,9 @@
   <n-modal
     v-model:show="showModal"
     title="Naive UI Modal Example"
-    style="width: 600px"
     :closable="true"
     :mask-closable="false"
-    size="medium"
+    size="small"
   >
     <div id="map">
       <p>

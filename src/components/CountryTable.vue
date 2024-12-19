@@ -28,7 +28,7 @@ import { mapbox } from '../utils/mapbox.js'
 
 const countriesStore = useCountriesStore()
 
-const { countries, loading, error, counryData } = storeToRefs(countriesStore)
+const { countries} = storeToRefs(countriesStore)
 import {
   NDataTable,
   NTag,

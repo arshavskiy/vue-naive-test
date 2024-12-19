@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { countriesService } from '../api/countriesService.js'
-import { ref } from 'vue'
+
+import { useLocalStore } from '@/store/localStore.js'
 
 export const useCountriesStore = defineStore('countries', {
   // Initial state
@@ -8,32 +9,37 @@ export const useCountriesStore = defineStore('countries', {
     countries: [],
     loading: false,
     error: null,
-    countriesLocal: localStorage.getItem('countriesLocal') || '',
+    countriesLocal: () => {
+      const localStore = useLocalStore()
+      return localStore.getCountryFromLocal()
+    },
     cities: [],
-    counryData: {}
+    countryData: {},
   }),
 
   getters: {
     hasCountries() {
       return this.countries.length > 0
     },
-    getStoreElm(elm){
-      return this[elm];
+    getStoreElm(elm) {
+      return this[elm]
     },
     getGoogleUrl() {
-      return this.counryData;
-    }
+      return this.countryData
+    },
   },
 
   actions: {
-    setGoogleUrl(data){
-      this.counryData = data;
+    setGoogleUrl(data) {
+      this.countryData = data
     },
     saveToLocalStorage(data) {
-      localStorage.setItem('countriesLocal', data)
+      const localStore = useLocalStore()
+      localStore.stCountryToLocal(data)
     },
     loadFromLocalStorage() {
-      this.sharedData = localStorage.getItem('countriesLocal') || ''
+      const localStore = useLocalStore()
+      this.sharedData = localStore.getCountryFromLocal()
     },
     // Fetch all countriesList
     async fetchCountries() {
